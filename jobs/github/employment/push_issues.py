@@ -1,7 +1,8 @@
 from config.env import settings
 from github import enable_console_debug_logging
 from jobs.github.config import g
-import pprint
+from pprint import pprint
+from integrations.todoist.helpers import create_parent_task, Task
 # enable_console_debug_logging()
 
 try:
@@ -12,12 +13,20 @@ try:
         work_repo = g.get_repo(work_repository_url)
         issues = work_repo.get_issues(state="open", assignee="uncleSlayer")
 
-        for issue in issues:
-            pprint.pprint({
-                "issue_number": issue.number,
-                "issue_title": issue.title,
-                "issue_description": issue.body
-            })
+        for issue in issues: 
+
+            task = Task(
+                title=issue.title,
+                description=issue.body,
+                due_date=None,
+                due_datetime=None,
+                steps=None,
+                project_id=None
+            )
+
+            t = create_parent_task(task)
+
+            pprint(t)
 
 except Exception as e:
     print(f"Error: {e}")

@@ -27,9 +27,9 @@ def create_parent_task(task: Task):
         task = todoist.add_task(
             content=task.title,
             description=task.description,
-            due_date=task.due_date,
-            due_datetime=task.due_datetime,
-            project_id=task.steps[0].project_id,
+            due_date=task.due_date if task.due_date else None,
+            due_datetime=task.due_datetime if task.due_datetime else None,
+            # project_id=task.steps[0].project_id if task.steps else None,
         )
 
     except Exception as e:
