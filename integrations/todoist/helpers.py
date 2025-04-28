@@ -1,6 +1,7 @@
 from integrations.todoist.config import todoist
 from pydantic import BaseModel
 import datetime
+from todoist import Task as TodoistTask
 
 
 class ChildTask(BaseModel):
@@ -37,3 +38,14 @@ def create_parent_task(task: Task):
         return None
 
     return task
+
+
+def get_all_tasks_by_project(
+    project_id: str,
+) -> list[TodoistTask] | None:
+    try:
+        tasks = todoist.filter_tasks(query="due after: 2025-04-28")
+        return tasks
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
