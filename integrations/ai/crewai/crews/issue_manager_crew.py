@@ -1,7 +1,20 @@
 from crewai import Agent, Crew, Task, Process
+from langchain_openai import ChatOpenAI
+from config.env import settings
+from dotenv import load_dotenv
+from crewai import LLM
 
 
 class IssueManagerCrew(Crew):
+
+    def __init__(self):
+        load_dotenv()
+        super().__init__(
+            agents=[self.github_issue_to_todoist_converter()],
+            tasks=[self.github_issue_to_todoist_converter_task()],
+            process=Process.sequential,
+            verbose=True
+        )
 
     def github_issue_to_todoist_converter(self) -> Agent:
 
@@ -50,4 +63,17 @@ class IssueManagerCrew(Crew):
                 You know the rules of Todoist task descriptions, and you know how to write them.
             """,
             verbose=True,
+            llm=LLM(
+                model="gpt-3.5-turbo",
+                api_key=settings.OPENAI_API_KEY
+            )
         )
+
+
+    def github_issue_to_todoist_converter_task(self) -> Task:
+        return Task(
+            description="Translate GitHub issues into Todoist task descriptions.",
+            expected_output="Todoist task description in todoist supported markdown.",
+            agent=self.github_issue_to_todoist_converter()
+        )
+
