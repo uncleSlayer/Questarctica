@@ -18,7 +18,7 @@ try:
             if id > 1:
                 break
 
-            pprint(issue)
+            print("id: ", id)
 
             # check if the issue already exists in the database
             # existing_issue = github_issues_collection.find_one({"id": issue.id})
@@ -60,12 +60,16 @@ try:
 
             issue_manager_crew = IssueManagerCrew() 
 
+            issue_object = {
+                "title": issue.title,
+                "body": issue.body 
+            }
+
+            pprint(issue_object)
+
 
             issue_manager_crew_output = issue_manager_crew.kickoff({
-                "github_issue": f"""
-                The issue title is: {issue.title}
-                The issue body is: {issue.body}  
-            """
+                "github_issue": issue_object
             })
 
             pprint(issue_manager_crew_output)

@@ -63,10 +63,10 @@ class IssueManagerCrew(Crew):
                 You know the rules of Todoist task descriptions, and you know how to write them.
             """,
             verbose=True,
-            llm=LLM(
-                model="gpt-3.5-turbo",
-                api_key=settings.OPENAI_API_KEY
-            )
+            # llm=LLM(
+            #     model="gpt-3.5-turbo",
+            #     api_key=settings.OPENAI_API_KEY
+            # )
         )
 
 
