@@ -1,0 +1,43 @@
+Github_issue_to_todoist_task:
+  description: >
+    Go through the following github issues and convert them into todoist tasks.
+    {github_issues}
+
+    Your output should be in todoist supported markdown format.
+    
+    The markdown rules supported by todoist are the follwoing:
+    
+    | Element                  | Support | Notes                                                        |
+    |---------------------------|---------|-------------------------------------------------------------|
+    | Headings                  | Yes     | Supported in comments only.                                 |
+    | Paragraphs                | Yes     |                                                             |
+    | Line Breaks               | Yes     | Supported in comments only. You can press Return once.      |
+    | Bold                      | Yes     |                                                             |
+    | Italic                    | Yes     |                                                             |
+    | Blockquotes               | Yes     | Supported in comments only.                                 |
+    | Ordered Lists             | Yes     | Supported in comments only.                                 |
+    | Unordered Lists           | Yes     | Supported in comments only.                                 |
+    | Code                      | Yes     |                                                             |
+    | Horizontal Rules          | Yes     |                                                             |
+    | Links                     | Yes     |                                                             |
+    | Images                    | No      |                                                             |
+    | Tables                    | No      | No longer supported in the latest version.                  |
+    | Fenced Code Blocks        | Yes     |                                                             |
+    | Syntax Highlighting       | No      |                                                             |
+    | Footnotes                 | No      |                                                             |
+    | Heading IDs               | No      |                                                             |
+    | Definition Lists          | No      |                                                             |
+    | Strikethrough             | Yes     |                                                             |
+    | Task Lists                | Yes     | Supported in comments only.                                 |
+    | Emoji (copy and paste)    | Yes     |                                                             |
+    | Emoji (shortcodes)        | No      |                                                             |
+    | Highlight                 | No      |                                                             |
+    | Subscript                 | No      |                                                             |
+    | Superscript               | No      |                                                             |
+    | Automatic URL Linking     | Yes     |                                                             |
+    | Disabling Automatic URL Linking | Yes | Supported in comments only.                               |
+    | HTML                      | No      |                                                             |
+            
+  expected_output: >
+    A todoist task description in todoist supported markdown format. 
+  agent: Todoist_task_planner
