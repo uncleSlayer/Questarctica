@@ -2,6 +2,12 @@ version = 1
 revision = 2
 requires-python = ">=3.13"
 
+[manifest]
+members = [
+    "crews",
+    "questarctica",
+]
+
 [[package]]
 name = "aiohappyeyeballs"
 version = "2.6.1"
@@ -395,6 +401,17 @@ wheels = [
 ]
 
 [[package]]
+name = "crews"
+version = "0.1.0"
+source = { virtual = "crews" }
+dependencies = [
+    { name = "fastapi", extra = ["standard"] },
+]
+
+[package.metadata]
+requires-dist = [{ name = "fastapi", extras = ["standard"], specifier = ">=0.115.9" }]
+
+[[package]]
 name = "cryptography"
 version = "44.0.2"
 source = { registry = "https://pypi.org/simple" }
@@ -496,6 +513,19 @@ wheels = [
 ]
 
 [[package]]
+name = "email-validator"
+version = "2.2.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "dnspython" },
+    { name = "idna" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/48/ce/13508a1ec3f8bb981ae4ca79ea40384becc868bfae97fd1c942bb3a001b1/email_validator-2.2.0.tar.gz", hash = "sha256:cb690f344c617a714f22e66ae771445a1ceb46821152df8e165c5f9a364582b7", size = 48967, upload_time = "2024-06-20T11:30:30.034Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d7/ee/bf0adb559ad3c786f12bcbc9296b3f5675f529199bef03e2df281fa1fadb/email_validator-2.2.0-py3-none-any.whl", hash = "sha256:561977c2d73ce3611850a06fa56b414621e0c8faa9d66f2611407d87465da631", size = 33521, upload_time = "2024-06-20T11:30:28.248Z" },
+]
+
+[[package]]
 name = "et-xmlfile"
 version = "2.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -525,6 +555,35 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/ab/dd/d854f85e70f7341b29e3fda754f2833aec197bd355f805238758e3bcd8ed/fastapi-0.115.9.tar.gz", hash = "sha256:9d7da3b196c5eed049bc769f9475cd55509a112fbe031c0ef2f53768ae68d13f", size = 293774, upload_time = "2025-02-27T16:43:43.149Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/32/b6/7517af5234378518f27ad35a7b24af9591bc500b8c1780929c1295999eb6/fastapi-0.115.9-py3-none-any.whl", hash = "sha256:4a439d7923e4de796bcc88b64e9754340fcd1574673cbd865ba8a99fe0d28c56", size = 94919, upload_time = "2025-02-27T16:43:40.537Z" },
+]
+
+[package.optional-dependencies]
+standard = [
+    { name = "email-validator" },
+    { name = "fastapi-cli", extra = ["standard"] },
+    { name = "httpx" },
+    { name = "jinja2" },
+    { name = "python-multipart" },
+    { name = "uvicorn", extra = ["standard"] },
+]
+
+[[package]]
+name = "fastapi-cli"
+version = "0.0.7"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "rich-toolkit" },
+    { name = "typer" },
+    { name = "uvicorn", extra = ["standard"] },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/fe/73/82a5831fbbf8ed75905bacf5b2d9d3dfd6f04d6968b29fe6f72a5ae9ceb1/fastapi_cli-0.0.7.tar.gz", hash = "sha256:02b3b65956f526412515907a0793c9094abd4bfb5457b389f645b0ea6ba3605e", size = 16753, upload_time = "2024-12-15T14:28:10.028Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a1/e6/5daefc851b514ce2287d8f5d358ae4341089185f78f3217a69d0ce3a390c/fastapi_cli-0.0.7-py3-none-any.whl", hash = "sha256:d549368ff584b2804336c61f192d86ddea080c11255f375959627911944804f4", size = 10705, upload_time = "2024-12-15T14:28:06.18Z" },
+]
+
+[package.optional-dependencies]
+standard = [
+    { name = "uvicorn", extra = ["standard"] },
 ]
 
 [[package]]
@@ -1896,6 +1955,15 @@ wheels = [
 ]
 
 [[package]]
+name = "python-multipart"
+version = "0.0.20"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/f3/87/f44d7c9f274c7ee665a29b885ec97089ec5dc034c7f3fafa03da9e39a09e/python_multipart-0.0.20.tar.gz", hash = "sha256:8dd0cab45b8e23064ae09147625994d090fa46f5b0d1e13af944c331a7fa9d13", size = 37158, upload_time = "2024-12-16T19:45:46.972Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/45/58/38b5afbc1a800eeea951b9285d3912613f2603bdf897a4ab0f4bd7f405fc/python_multipart-0.0.20-py3-none-any.whl", hash = "sha256:8a62d3a8335e06589fe01f2a3e178cdcc632f3fbe0d492ad9ee0ec35aab1f104", size = 24546, upload_time = "2024-12-16T19:45:44.423Z" },
+]
+
+[[package]]
 name = "pyvis"
 version = "0.3.2"
 source = { registry = "https://pypi.org/simple" }
@@ -2040,6 +2108,20 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/ab/3a/0316b28d0761c6734d6bc14e770d85506c986c85ffb239e688eeaab2c2bc/rich-13.9.4.tar.gz", hash = "sha256:439594978a49a09530cff7ebc4b5c7103ef57baf48d5ea3184f21d9a2befa098", size = 223149, upload_time = "2024-11-01T16:43:57.873Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/19/71/39c7c0d87f8d4e6c020a393182060eaefeeae6c01dab6a84ec346f2567df/rich-13.9.4-py3-none-any.whl", hash = "sha256:6049d5e6ec054bf2779ab3358186963bac2ea89175919d699e378b99738c2a90", size = 242424, upload_time = "2024-11-01T16:43:55.817Z" },
+]
+
+[[package]]
+name = "rich-toolkit"
+version = "0.14.4"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "click" },
+    { name = "rich" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e1/33/18332e1359803ae6407a1e605a6bdb253a426ffe931555f1299f9e39eece/rich_toolkit-0.14.4.tar.gz", hash = "sha256:db256cf45165cae381c9bbf3b48a0fd4d99a07c80155cc655c80212a62e28fe1", size = 104487, upload_time = "2025-04-29T19:43:36.904Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/44/48/c6d43d4c56c45c0171c771b2b73deeec493efb57795b651319201e7c4638/rich_toolkit-0.14.4-py3-none-any.whl", hash = "sha256:cc71ebee83eaa122d8e42882408bc5a4bf0240bbf1e368811ee56d249b3d742a", size = 24258, upload_time = "2025-04-29T19:43:35.502Z" },
 ]
 
 [[package]]

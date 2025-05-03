@@ -14,3 +14,8 @@ dependencies = [
     "python-dotenv>=1.1.0",
     "todoist-api-python>=3.0.1",
 ]
+
+[tool.uv.workspace]
+members = [
+    "crews",
+]
