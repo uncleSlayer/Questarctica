@@ -2,6 +2,13 @@ from crewai import Agent, Task, Crew
 from textwrap import dedent
 from pydantic import BaseModel
 
+# from crews.tools.todoist.tools import get_one_week_todoist_schedule, create_todoist_task_on_schedule
+
+from crews.src.crews.tools.todoist.tools import (
+    get_one_week_todoist_schedule,
+    create_todoist_task_on_schedule,
+)
+
 
 class GithubIssue(BaseModel):
     seriel_number: str
@@ -12,6 +19,16 @@ class GithubIssue(BaseModel):
 
 class GithubToTodoistTaskDescriptionOutput(BaseModel):
     task_description: str
+
+
+class Schedule(BaseModel):
+    due_date: str
+    due_time: str
+    Meridiem: str
+
+
+class ScheduleFixerAgentOutput(BaseModel):
+    schedule: Schedule
 
 
 class GithubToTodoistCrew:
@@ -85,7 +102,6 @@ class GithubToTodoistCrew:
         return Task(
             description=dedent(
                 f"""
-                You are a Github Issue to Todoist Task description writer agent.
                 Read the following github issue thoroughly, find out what is the title, body, url, issue number of the issue and write a todoist task description for it in markdown format.
                 Following is the github issue details:
                 
@@ -124,23 +140,59 @@ class GithubToTodoistCrew:
                 - I go for a quick bath and have my lunch from 1 pm to 2:30 pm.
                 - I take a break from 2:30 pm to 3 pm.
                 - I again start working on my github issues from 3 pm to 5 pm and then call it a day.
-                - On Saturdays and Sundays, I don't work on my github issues.
+                - On Saturdays and Sundays, I don't work on my github issues. 
+
+                Tools at your disposal:
+                get_one_week_todoist_schedule_tool - In order to get the dates which are not available.
+
+                create_todoist_task_on_schedule_tool - In order to create a todoist task on the given schedule. While using this tool, you have to make sure you are not passing the datetime which was returned by get_one_week_todoist_schedule_tool, You have to pass a datetime which is not available in there.
+
             """
             ),
             role="You are a Todoist task creator agent.",
-            tools=[],
+            tools=[get_one_week_todoist_schedule, create_todoist_task_on_schedule],
             verbose=True,
+            output_pydantic=ScheduleFixerAgentOutput,
         )
+
+
+    def create_todoist_task_on_schedule_task(self):
+        return Task(
+            description=dedent(
+                f"""
+                Read the provided schedule and create a todoist task on the given schedule.
+            """
+            ),
+            expected_output=dedent(
+                f"""
+                A todoist task description for the github issue in todoist supported markdown format. 
+                """
+            ),
+            agent=self.schedule_fixer_agent(),
+            output_pydantic=GithubToTodoistTaskDescriptionOutput,
+        )
+
 
     def kick_off(self):
         crew = Crew(
             name="GithubToTodoistCrew",
-            agents=[self.github_issues_to_todoist_tasks_description_writer_agent()],
-            tasks=[self.create_github_issue_to_todoist_description_task()],
+            agents=[
+                self.github_issues_to_todoist_tasks_description_writer_agent(),
+                self.schedule_fixer_agent(),
+            ],
+            tasks=[
+                self.create_github_issue_to_todoist_description_task(),
+                self.create_todoist_task_on_schedule_task(),
+            ],
             verbose=True,
         )
         output = crew.kickoff()
 
-        output_parsed = output.to_dict().get("task_description").encode('utf-8').decode('unicode_escape')
+        output_parsed = (
+            output.to_dict()
+            .get("task_description")
+            .encode("utf-8")
+            .decode("unicode_escape")
+        )
 
         return output_parsed

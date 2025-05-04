@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from src.crews.github_to_todoist_crew import GithubToTodoistCrew, GithubIssue
 from crewai import Crew
+from pprint import pprint
 
 app = FastAPI()
 
@@ -9,8 +10,14 @@ app = FastAPI()
 def read_root():
 
     from integrations.todoist.helpers import get_all_tasks_for_a_week
+    import datetime
 
-    print(get_all_tasks_for_a_week())
+    task_list = get_all_tasks_for_a_week()
+    
+    for task in task_list:
+        due_time = task.due.date
+        print(due_time)
+
     github_to_todoist_crew = GithubToTodoistCrew(
         github_issue=GithubIssue(
             seriel_number="942",
