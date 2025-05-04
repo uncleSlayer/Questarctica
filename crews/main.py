@@ -7,16 +7,15 @@ app = FastAPI()
 
 @app.get("/")
 def read_root():
-    
-    from integrations.todoist.helpers import get_all_tasks_for_a_week
-    print(get_all_tasks_for_a_week())
-    github_to_todoist_crew = GithubToTodoistCrew()
 
-    agent = github_to_todoist_crew.github_issues_to_todoist_tasks_creator_agent()
-    task = github_to_todoist_crew.create_github_issue_to_todoist_task(github_issue=GithubIssue(
-        seriel_number="942",
-        title="Reduce API calls",
-        body="""
+    from integrations.todoist.helpers import get_all_tasks_for_a_week
+
+    print(get_all_tasks_for_a_week())
+    github_to_todoist_crew = GithubToTodoistCrew(
+        github_issue=GithubIssue(
+            seriel_number="942",
+            title="Reduce API calls",
+            body="""
             Currently, the playbook is making multiple unnecessary query API calls during its execution. These redundant calls are leading to increased network traffic, slower performance, and potential rate-limiting issues, especially when the playbook is triggered frequently or used at scale.
 
             Upon reviewing the code, it appears that some API queries are being repeated even though the data is already available in memory or fetched earlier in the flow. This not only adds latency but also increases the risk of inconsistent data if responses vary slightly over time.
@@ -48,17 +47,17 @@ def read_root():
             ### Expected Behavior:
 
             Each required API call should be made only once per context.
-        """,
-        url="https://github.com/silzila/silzila-saas-frontend/issues/942"
-    )) 
+            """,
+            url="https://github.com/silzila/silzila-saas-frontend/issues/942",
+        )
+    )
 
-    crew = Crew(name="GithubToTodoistCrew", agents=[agent], tasks=[task], verbose=True)
-
-    output = crew.kickoff()
+    output = github_to_todoist_crew.kick_off()
 
     return {"output": output}
 
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
