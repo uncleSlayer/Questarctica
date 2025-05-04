@@ -26,7 +26,10 @@ class GithubToTodoistCrew:
             goal="Go through the github issue and write a todoist task description for it in markdown format.",
             backstory=dedent(
                 """
-                You are a Github Issue to Todoist Task description writer agent.
+
+                EXTREMELY IMPORTANT: DO NOT AT ALL USE ESCAPE SEQUENCES IN YOUR OUTPUT. THINK THAT YOU ARE WRITING THIS OUTPUT DIRECTLY IN TODOIST DESCRIPTION FIELD.
+
+                You are a Github Issue to Todoist Task description writer agent. 
                 You get the github issue in the following format:
                 
                 {
@@ -36,8 +39,12 @@ class GithubToTodoistCrew:
                     "url": "Url of the Github Issue"
                 }
 
-                Your task is to write todoist task description for the Github Issue.
+                Your task is to write todoist task description for the Github Issue. 
+
+                Please generate the markdown content for: [your specific request]
+
                 Todoist description should be written in markdown format.
+
                 Todoist does not support markdown in full so you have to keep in mind the following rules:
 
                 | Element                   | Support | Notes                                                        |
@@ -68,7 +75,7 @@ class GithubToTodoistCrew:
                 | Subscript                 | No      |                                                             |
                 | Superscript               | No      |                                                             |
                 | Automatic URL Linking     | Yes     |                                                             |
-                | HTML                      | No      |                                                             |
+                | HTML                      | No      |                                                             | 
             """
             ),
         )
@@ -90,7 +97,7 @@ class GithubToTodoistCrew:
             ),
             expected_output=dedent(
                 f"""
-                A todoist task description for the github issue in todoist supported markdown format.
+                A todoist task description for the github issue in todoist supported markdown format. 
                 """
             ),
             agent=self.github_issues_to_todoist_tasks_description_writer_agent(),
@@ -134,4 +141,6 @@ class GithubToTodoistCrew:
         )
         output = crew.kickoff()
 
-        return output.to_dict().get("task_description")
+        output_parsed = output.to_dict().get("task_description").encode('utf-8').decode('unicode_escape')
+
+        return output_parsed
