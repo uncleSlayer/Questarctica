@@ -405,11 +405,15 @@ name = "crews"
 version = "0.1.0"
 source = { virtual = "crews" }
 dependencies = [
+    { name = "crewai" },
     { name = "fastapi", extra = ["standard"] },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "fastapi", extras = ["standard"], specifier = ">=0.115.9" }]
+requires-dist = [
+    { name = "crewai", specifier = ">=0.114.0" },
+    { name = "fastapi", extras = ["standard"], specifier = ">=0.115.9" },
+]
 
 [[package]]
 name = "cryptography"
