@@ -143,7 +143,7 @@ class GithubToTodoistCrew:
                 - On Saturdays and Sundays, I don't work on my github issues. 
 
                 Tools at your disposal:
-                get_one_week_todoist_schedule_tool - In order to get the dates which are not available.
+                get_one_week_todoist_schedule_tool - In order to get the dates which are not available. This tool will return a list of dates which are not available to create a task on todoist. Always create a new task on a date which is not available in the list.
 
                 create_todoist_task_on_schedule_tool - In order to create a todoist task on the given schedule. While using this tool, you have to make sure you are not passing the datetime which was returned by get_one_week_todoist_schedule_tool, You have to pass a datetime which is not available in there.
 

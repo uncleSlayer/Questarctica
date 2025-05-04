@@ -6,7 +6,7 @@ from datetime import datetime
 from todoist_api_python.models import Task as TodoistTask
 
 class OneWeekUnAvailableTime(BaseModel):
-    due_date: list[str]
+    dates_unavailable_to_create_task: list[str]
 
 
 class due_datetime(BaseModel):
@@ -61,7 +61,7 @@ def get_one_week_todoist_schedule() -> OneWeekUnAvailableTime:
 
     print("master_unavailable_times: ", master_unavailable_times)
 
-    return OneWeekUnAvailableTime(due_date=master_unavailable_times).model_dump()
+    return OneWeekUnAvailableTime(dates_unavailable_to_create_task=master_unavailable_times).model_dump()
 
 
 @tool("create_todoist_task_on_schedule_tool")
