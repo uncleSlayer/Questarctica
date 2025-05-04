@@ -7,7 +7,9 @@ app = FastAPI()
 
 @app.get("/")
 def read_root():
-
+    
+    from integrations.todoist.helpers import get_all_tasks_for_a_week
+    print(get_all_tasks_for_a_week())
     github_to_todoist_crew = GithubToTodoistCrew()
 
     agent = github_to_todoist_crew.github_issues_to_todoist_tasks_creator_agent()
@@ -53,8 +55,6 @@ def read_root():
     crew = Crew(name="GithubToTodoistCrew", agents=[agent], tasks=[task], verbose=True)
 
     output = crew.kickoff()
-
-    print(output)
 
     return {"output": output}
 

@@ -12,11 +12,11 @@ class GithubIssue(BaseModel):
 
 class GithubToTodoistCrew:
 
-    def github_issues_to_todoist_tasks_creator_agent(self):
+    def github_issues_to_todoist_tasks_description_writer_agent(self):
 
         return Agent(
-            goal="You are a Github Issue to Todoist Task description writer agent.",
-            role="Go through the github issue and write a todoist task description for it in markdown format.",
+            role="You are a Github Issue to Todoist Task description writer agent.",
+            goal="Go through the github issue and write a todoist task description for it in markdown format.",
             backstory=dedent(
                 """
             You are a Github Issue to Todoist Task description writer agent.
@@ -66,7 +66,7 @@ class GithubToTodoistCrew:
             ),
         )
 
-    def create_github_issue_to_todoist_task(self, github_issue: GithubIssue):
+    def create_github_issue_to_todoist_description_task(self, github_issue: GithubIssue):
 
         return Task(
             description=dedent(
@@ -87,4 +87,30 @@ class GithubToTodoistCrew:
                 """
             ),
             agent=self.github_issues_to_todoist_tasks_creator_agent(),
+        )
+
+    def schedule_fixer_agent(self):
+        return Agent(
+            goal="Create a task in my todoist account to fix the github issue.",
+            backstory=dedent("""
+                You are a Github Issue to Todoist Task description writer agent and you manage my todoist account.
+                
+                Based on my daily routine, and my availability, you have to create a task in my todoist account to fix the github issue.
+
+                Following is some pointers regarding my daily routine:
+                - I am a software engineer and I work on a lot of github issues.
+                - I have a todoist account and I use it to manage my daily tasks.
+                - I wake up at around 6:00 am and get my morning routine done by 15 minutes before 8 am.
+                - I work go through my todoist account tasks and think about the whole day for 15 minutes.
+                - I start working on the githug issues assigned to me from 9 am to 11 am.
+                - On Tuesday, Thursday and Saturday, I attend my daily standup meeting at 11 am, which lasts for about 30 minutes to an hour.
+                - Again from 11 am to 1 pm, I work on my github issues.
+                - I go for a quick bath and have my lunch from 1 pm to 2:30 pm.
+                - I take a break from 2:30 pm to 3 pm.
+                - I again start working on my github issues from 3 pm to 5 pm and then call it a day.
+                - On Saturdays and Sundays, I don't work on my github issues.
+            """),
+            role="You are a Todoist task creator agent.",
+            tools=[],
+            verbose=True,   
         )
