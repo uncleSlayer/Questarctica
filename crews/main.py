@@ -58,7 +58,7 @@ def read_root(github_issues: list[GithubIssue]):
 
     # output = github_to_todoist_crew.kick_off()
 
-    return {"output": output}
+    return {"output": "succeed"}
 
 
 if __name__ == "__main__":
