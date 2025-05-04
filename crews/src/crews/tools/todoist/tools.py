@@ -47,7 +47,7 @@ def get_one_week_todoist_schedule() -> OneWeekUnAvailableTime:
     For example:
 
     {
-        "due_date": ['2025-05-05 15:45:00', '2025-05-06 15:45:00', '2025-05-07 15:45:00', '2025-05-05', '2025-05-06', '2025-05-07']
+        "dates_unavailable_to_create_task": ['2025-05-05 15:45:00', '2025-05-06 15:45:00', '2025-05-07 15:45:00', '2025-05-05', '2025-05-06', '2025-05-07']
     }
 
     """
@@ -57,7 +57,7 @@ def get_one_week_todoist_schedule() -> OneWeekUnAvailableTime:
     master_unavailable_times = []
 
     for task in due_tasks:
-        master_unavailable_times.append(task.due.date.strftime("%Y-%m-%d"))
+        master_unavailable_times.append(task.due.string)
 
     print("master_unavailable_times: ", master_unavailable_times)
 

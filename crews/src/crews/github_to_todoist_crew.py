@@ -1,6 +1,7 @@
 from crewai import Agent, Task, Crew
 from textwrap import dedent
 from pydantic import BaseModel
+import datetime
 
 # from crews.tools.todoist.tools import get_one_week_todoist_schedule, create_todoist_task_on_schedule
 
@@ -124,7 +125,7 @@ class GithubToTodoistCrew:
         return Agent(
             goal="Create a task in my todoist account to fix the github issue.",
             backstory=dedent(
-                """
+                f"""
                 You are a Github Issue to Todoist Task description writer agent and you manage my todoist account.
                 
                 Based on my daily routine, and my availability, you have to create a task in my todoist account to fix the github issue.
@@ -144,6 +145,7 @@ class GithubToTodoistCrew:
 
                 Tools at your disposal:
                 get_one_week_todoist_schedule_tool - In order to get the dates which are not available. This tool will return a list of dates which are not available to create a task on todoist. Always create a new task on a date which is not available in the list.
+                If response from get_one_week_todoist_schedule_tool is an empty list ([]) then, create the task on the current date, which is: {datetime.date.today()}
 
                 create_todoist_task_on_schedule_tool - In order to create a todoist task on the given schedule. While using this tool, you have to make sure you are not passing the datetime which was returned by get_one_week_todoist_schedule_tool, You have to pass a datetime which is not available in there.
 

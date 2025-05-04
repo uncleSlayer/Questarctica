@@ -12,7 +12,7 @@ def get_all_tasks_for_a_week() -> list[TodoistTask] | None:
         today = datetime.today().date()
 
         tasks_iterator = todoist.filter_tasks(
-            query=f"due after: {today} & due before: {today + timedelta(days=7)} & @job"
+            query=f"{today} & due before: {today + timedelta(days=7)} & @job"
         )
 
         todoist_format_task = list(chain.from_iterable(tasks_iterator))
