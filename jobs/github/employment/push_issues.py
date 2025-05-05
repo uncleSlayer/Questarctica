@@ -5,6 +5,7 @@ from integrations.ai.crewai.crews.issue_manager_crew import IssueManagerCrew
 from crews.src.crews.github_to_todoist_crew import GithubIssue
 import requests
 from integrations.mongo.config import github_issues_collection
+from config.host import HOST
 
 try:
 
@@ -72,7 +73,7 @@ try:
 
         print('payload: ', payload)
         response = requests.post(
-            "http://localhost:8000/job/task/create", json=payload,
+            f"{HOST}/job/task/create", json=payload,
         )
         pprint(response.json()) 
 

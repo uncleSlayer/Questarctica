@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")
     MONGO_DB_PASSWORD: str = os.getenv("MONGO_DB_PASSWORD", "")
     MONGO_DB_USERNAME: str = os.getenv("MONGO_DB_USERNAME", "")
+    ENV: str = os.getenv("ENV", "dev")
 
 
 settings = Settings()
